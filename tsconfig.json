@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "lib": ["ES2021"],
+    "module": "Node16",
+    "target": "ES2021",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "removeComments": true,
+    "resolveJsonModule": true,
+    "declaration": true
+  },
+  "include": ["lib/**/*", "bin/**/*"]
+}

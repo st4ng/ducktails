@@ -1,0 +1,48 @@
+{
+  "name": "ducktails",
+  "version": "0.1.1",
+  "description": "🦆 ducking beautiful log tails",
+  "keywords": [
+    "tail",
+    "logs",
+    "color",
+    "cli"
+  ],
+  "author": "st4ng",
+  "repository": "https://github.com/st4ng/ducktails",
+  "license": "MIT",
+  "type": "module",
+  "engines": {
+    "node": ">=16"
+  },
+  "main": "bin/index.js",
+  "bin": "bin/index.js",
+  "files": [
+    "bin/**/*.js",
+    "bin/**/*.d.ts",
+    "lib/**/*.js",
+    "lib/**/*.d.ts",
+    "ducktails.schema.json"
+  ],
+  "scripts": {
+    "dev": "tsc --watch --sourceMap",
+    "build": "eslint && tsc && pnpm schema",
+    "lint": "eslint --fix",
+    "schema": "typescript-json-schema ./tsconfig.json TailsConfig | sed -E 's/\\bimport(.*?)\\.//g' > ducktails.schema.json"
+  },
+  "dependencies": {
+    "chalk": "^5.3.0",
+    "chokidar": "^3.6.0",
+    "commander": "^12.0.0",
+    "tail": "^2.2.6"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.17",
+    "@types/tail": "^2.2.3",
+    "@typescript-eslint/eslint-plugin": "^6.21.0",
+    "@typescript-eslint/parser": "^6.21.0",
+    "eslint": "^8.56.0",
+    "typescript": "^5.3.3",
+    "typescript-json-schema": "^0.63.0"
+  }
+}

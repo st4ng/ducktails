@@ -1,0 +1,43 @@
+name: Publish Release to npmjs
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - name: Download tarball from release
+        id: download
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT }}
+        run: |
+          gh release download \
+              --pattern *.tgz \
+              --repo="$GITHUB_REPOSITORY"
+          echo "package=$(find . -name '*.tgz')" >> $GITHUB_OUTPUT
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20.x'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: latest
+
+      - name: Publish to npmjs
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          package=${{ steps.download.outputs.package }}
+          pnpm publish "$package" \
+            --no-git-checks \
+            --provenance \
+            --access public
